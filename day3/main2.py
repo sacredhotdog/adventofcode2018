@@ -56,19 +56,19 @@ class Cube:
         w, h, l = self.size
         stack = self._stack
         candidates = set()
+        rejected = set()
         for x in range(w):
             for y in range(h):
-                print(f"Examining cell ({x}, {y})")
                 layers = set()
                 for z in range(l):
                     layer = stack[z]
                     if layer[y][x] == "#":
                         layers.add(layer.name)
                 if len(layers) == 1:
-                    candidates = candidates.union(layers)
-                else:
-                    candidates = candidates - layers
-        return candidates
+                    candidates.add(layers.pop())
+                elif len(layers) > 1:
+                    rejected = rejected.union(layers)
+        return candidates - rejected
 
 
 with open("input") as fd:
