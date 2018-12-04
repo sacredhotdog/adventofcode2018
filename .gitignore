@@ -1,0 +1,4 @@
+# Ignore Nuitka builds
+*.bin
+*.build
+.env
