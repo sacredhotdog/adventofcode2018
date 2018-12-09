@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 import re
 import datetime as dt
 from collections import namedtuple, defaultdict, Counter
@@ -12,6 +11,7 @@ parser1 = re.compile("^\[(\d+)\-(\d+)\-(\d+)\ (\d+):(\d+)] ([\w #]+)$")
 Entry = namedtuple(
     "Entry", ("year", "month", "day", "hour", "minute", "action")
 )
+
 
 class Entry:
     action_parser = re.compile("^Guard #(\d+) begins shift$")
@@ -28,9 +28,6 @@ class Entry:
         return dt.datetime(
             self.year, self.month, self.day, self.hour, self.minute
         )
-
-    def __eq__(self, other):
-        return self.as_dt() == other.as_dt()
 
     def __lt__(self, other):
         return self.as_dt() < other.as_dt()
@@ -69,7 +66,6 @@ class GuardLog:
         for start, end in self._state[guard_id]:
             c.update(range(start.minute, end.minute))
         return c.most_common()[0][0]
-
 
     def __getitem__(self, item):
         return self._state[item]
